@@ -1,0 +1,38 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "logAnalyticsWorkspaceName": {
+        "type": "string",
+        "metadata": {
+          "description": "Name of the Log Analytics workspace to be updated."
+        }
+      },
+      "resourceGroupName": {
+        "type": "string",
+        "metadata": {
+          "description": "Name of the resource group where the Log Analytics workspace is located."
+        }
+      },
+      "location": {
+        "type": "string",
+        "metadata": {
+          "description": "Location"
+        }
+      }
+    },
+    "resources": [
+      {
+        "apiVersion": "2015-11-01-preview",
+        "type": "Microsoft.OperationalInsights/workspaces",
+        "name": "[parameters('logAnalyticsWorkspaceName')]",
+        "location": "[parameters('location')]",
+        "properties": {
+          "features": {
+            "disableLocalAuth": true
+        }
+       }
+      }
+    ],
+    "outputs": {}
+  }

@@ -1,0 +1,18 @@
+{
+    "inputs": {
+        "variables": [
+            {
+                "name": "resourceGroup",
+                "type": "string",
+                "value": "@{split(variables('resourceId'),'/')[4]}"
+            }
+        ]
+    },
+    "runAfter": {
+        "Initialize-resourceId": [
+            "Succeeded"
+        ]
+    },
+    "type": "InitializeVariable"
+    
+}

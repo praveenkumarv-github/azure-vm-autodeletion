@@ -1,0 +1,13 @@
+{
+    "inputs": {
+        "body": "@outputs('Compose')",
+        "method": "POST",
+        "uri": "https://URL.azurewebsites.net/api/DeleteDSVM?"
+    },
+    "runAfter": {
+        "Compose": [
+            "Succeeded"
+        ]
+    },
+    "type": "Http"
+}

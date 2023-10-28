@@ -1,0 +1,86 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "dataCollectionRules_name": {
+            "type": "string"
+        },
+        "dataCollectionRules_location": {
+            "type": "string"
+        },
+        "dataCollectionEndpoints_externalid": {
+            "type": "string"
+        },
+        "loganalytics_workspace_externalid": {
+            "type": "string"
+        },
+        "loganalytics_workspace_name": {
+            "type": "string"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Insights/dataCollectionRules",
+            "apiVersion": "2021-09-01-preview",
+            "name": "[parameters('dataCollectionRules_name')]",
+            "location": "[parameters('dataCollectionRules_location')]",
+            "properties": {
+                "dataCollectionEndpointId": "[parameters('dataCollectionEndpoints_externalid')]",
+                "streamDeclarations": {
+                    "Custom-customssh_CL": {
+                        "columns": [
+                            {
+                                "name": "TimeGenerated",
+                                "type": "datetime"
+                            },
+                            {
+                                "name": "RawData",
+                                "type": "string"
+                            }
+                        ]
+                    }
+                },
+                "dataSources": {
+                    "logFiles": [
+                        {
+                            "streams": [
+                                "Custom-customssh_CL"
+                            ],
+                            "filePatterns": [
+                                "/var/log/activesshlogscron.txt"
+                            ],
+                            "format": "text",
+                            "settings": {
+                                "text": {
+                                    "recordStartTimestampFormat": "ISO 8601"
+                                }
+                            },
+                            "name": "customssh_CL"
+                        }
+                    ]
+                },
+                "destinations": {
+                    "logAnalytics": [
+                        {
+                            "workspaceResourceId": "[parameters('loganalytics_workspace_externalid')]",
+                            "name": "[parameters('loganalytics_workspace_name')]"
+                        }
+                    ]
+                },
+                "dataFlows": [
+                    {
+                        "streams": [
+                            "Custom-customssh_CL"
+                        ],
+                        "destinations": [
+                            "[parameters('loganalytics_workspace_name')]"
+                        ],
+                        "transformKql": "source",
+                        "outputStream": "Custom-customssh_CL"
+                    }
+                ]
+            }
+        }
+    ]
+}

@@ -1,0 +1,17 @@
+{
+    "inputs": {
+        "variables": [
+            {
+                "name": "subscriptionName",
+                "type": "string",
+                "value": "@{split(variables('resourceId'),'/')[2]}"
+            }
+        ]
+    },
+    "runAfter": {
+        "Initialize-resourceGroup": [
+            "Succeeded"
+        ]
+    },
+    "type": "InitializeVariable"
+}

@@ -1,0 +1,47 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "workspaceName": {
+      "type": "string",
+      "metadata": {
+        "description": "Specify the name of the workspace."
+      }
+    },
+    "location": {
+      "type": "string",
+      "defaultValue": "[resourceGroup().location]",
+      "metadata": {
+        "description": "Specify the location in which to create the workspace."
+      }
+    }
+  },
+  "resources": [
+    {
+      "type": "Microsoft.OperationalInsights/workspaces",
+      "apiVersion": "2020-08-01",
+      "name": "[parameters('workspaceName')]",
+      "location": "[parameters('location')]",
+      "properties": {}
+    },
+    {
+      "type": "Microsoft.OperationalInsights/workspaces/dataSources",
+      "apiVersion": "2020-08-01",
+      "name": "[format('{0}/{1}', parameters('workspaceName'), 'LinuxPerformanceProcessor')]",
+      "kind": "LinuxPerformanceObject",
+      "properties": {
+        "objectName": "Processor",
+        "instanceName": "*",
+        "intervalSeconds": 10,
+        "performanceCounters": [
+          {
+            "counterName": "% Processor Time"
+          }
+        ]
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.OperationalInsights/workspaces', parameters('workspaceName'))]"
+      ]
+    }
+  ]
+}

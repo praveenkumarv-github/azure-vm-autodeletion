@@ -1,0 +1,15 @@
+{
+    "inputs": {
+        "dsvmName": "@variables('dsvmName')",
+        "requestID": "@variables('requestID')",
+        "resourceGroup": "@variables('resourceGroup')",
+        "subscriptionName": "@variables('subscriptionName')",
+        "user": "@variables('user')"
+    },
+    "runAfter": {
+        "Initialize-user": [
+            "Succeeded"
+        ]
+    },
+    "type": "Compose"
+}
