@@ -1,0 +1,19 @@
+{
+        "inputs": {
+            "variables": [
+                {
+                    "name": "dsvmName",
+                    "type": "string",
+                    "value": "@{string(body('jsonParser')?['data']?['alertContext']?['condition']?['allOf']?[0]?['dimensions']?[0]?['value'])}"
+                }
+            ]
+        },
+        "runAfter": {
+            "jsonParser": [
+                "Succeeded"
+            ]
+        },
+        "type": "InitializeVariable"
+}
+
+

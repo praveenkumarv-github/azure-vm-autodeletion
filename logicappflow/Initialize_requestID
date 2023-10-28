@@ -1,0 +1,18 @@
+{
+    "inputs": {
+        "variables": [
+            {
+                "name": "requestID",
+                "type": "string",
+                "value": "@{split(variables('dsvmName'),'-')[1]}"
+            }
+        ]
+    },
+    "runAfter": {
+        "Initialize-dsvmName": [
+            "Succeeded"
+        ]
+    },
+    "type": "InitializeVariable"
+    
+}

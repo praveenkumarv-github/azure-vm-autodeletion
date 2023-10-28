@@ -1,0 +1,17 @@
+{
+    "inputs": {
+        "variables": [
+            {
+                "name": "user",
+                "type": "string",
+                "value": "@{split(variables('dsvmName'),'-')[0]}"
+            }
+        ]
+    },
+    "runAfter": {
+        "Initialize-subscriptionName": [
+            "Succeeded"
+        ]
+    },
+    "type": "InitializeVariable"
+}

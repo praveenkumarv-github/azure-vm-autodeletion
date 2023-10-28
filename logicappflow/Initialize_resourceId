@@ -1,0 +1,19 @@
+{
+        "inputs": {
+            "variables": [
+                {
+                    "name": "resourceId",
+                    "type": "string",
+                    "value": "@{string(body('jsonParser')?['data']?['alertContext']?['condition']?['allOf']?[0]?['dimensions']?[1]?['value'])}"
+                }
+            ]
+        },
+        "runAfter": {
+            "Initialize-requestID": [
+                "Succeeded"
+            ]
+        },
+        "type": "InitializeVariable"
+}
+
+
